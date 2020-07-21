@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:macro_calculator/utils/extractedWidgets.dart';
 import 'package:macro_calculator/utils/textStyles.dart';
+import 'package:macro_calculator/utils/dynamaicTheme.dart';
 
 class ResultPage extends StatelessWidget {
   ResultPage({
@@ -13,155 +14,121 @@ class ResultPage extends StatelessWidget {
     @required this.tdee,
   });
 
-  final String totalCalories;
-  final String carbs;
-  final String protein;
-  final String fats;
+  final double totalCalories;
+  final double carbs;
+  final double protein;
+  final double fats;
   final double bmi;
-  final String tdee;
-
-  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  showSnackBar(String message) {
-    final snackBar = new SnackBar(
-      backgroundColor: Colors.grey[900],
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.error_outline, color: Colors.white),
-          SizedBox(
-            width: 8.0,
-          ),
-          Text(
-            message,
-            style: mySnackBarText,
-          ),
-        ],
-      ),
-      duration: Duration(seconds: 2),
-    );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-  }
+  final double tdee;
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          title: Text(
-            'Results',
-            style: myAppbarTitle,
-          ),
-          centerTitle: true,
-        ),
-        body: Container(
-          padding: EdgeInsets.all(6.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              MyWrappingContainer(
-                child: ResultContainer(
-                  title: 'Total Calories',
-                  amount: totalCalories,
-                  unit: 'kcals',
-                ),
-              ),
-              MyWrappingContainer(
-                child: Column(
-                  children: <Widget>[
-                    ResultContainer(
-                      title: 'Carbs',
-                      amount: carbs,
-                      unit: 'g',
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                            child: ResultContainer(
-                          title: 'Proteins',
-                          amount: protein,
-                          unit: 'g',
-                        )),
-                        Expanded(
-                            child: ResultContainer(
-                          title: 'Fats',
-                          amount: fats,
-                          unit: 'g',
-                        )),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              MyWrappingContainer(
+    return Scaffold(
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            //app bar
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0, right: 10.0),
+              child: Container(
                 child: Row(
                   children: <Widget>[
-                    Expanded(
-                        child: ResultContainer(
-                      title: 'BMI',
-                      amount: bmi.toStringAsFixed(1),
-                      unit: '',
-                    )),
-                    Expanded(
-                        child: Container(
-                      height: 70,
-                      margin: EdgeInsets.all(6.0),
-                      padding: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        color: Colors.grey[850],
+                    IconButton(
+                        icon: Icon(FontAwesomeIcons.angleLeft),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        }),
+                    Hero(
+                      tag: "appBarTitle",
+                      child: Text(
+                        "Results",
+                        style: isThemeDark(context)
+                            ? TitleTextStyles.dark
+                            : TitleTextStyles.light,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Text(
-                                'TDEE',
-                                style: myResultTitle,
-                              ),
-                              SizedBox(width: 4.0),
-                              GestureDetector(
-                                child: Icon(
-                                  Icons.info_outline,
-                                  size: 20.0,
-                                ),
-                                onTap: () {
-                                  HapticFeedback.lightImpact();
-                                  showSnackBar(
-                                      'Total Daily Energy Expenditure');
-                                  //show snackbar
-                                },
-                              )
-                            ],
-                          ),
-
-                          // SizedBox(height: 2.0),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.baseline,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            textBaseline: TextBaseline.alphabetic,
-                            children: <Widget>[
-                              Text(
-                                tdee,
-                                style: myResultAmount,
-                              ),
-                              SizedBox(width: 3.0),
-                              Text(
-                                'kcals',
-                                style: myResultUnit,
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )),
+                    ),
                   ],
                 ),
               ),
-            ],
-          ),
+            ),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: <Widget>[
+                  Material(
+                    type: MaterialType.transparency,
+                    child: Hero(
+                      tag: "topContainer",
+                      child: MyContainerTile(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            ResultContainer(
+                              title: "Total Calories",
+                              value: "${totalCalories.toStringAsFixed(0)}",
+                              units: " kcals",
+                            ),
+                            ResultContainer(
+                              title: "Carbs",
+                              value: "${carbs.toStringAsFixed(0)}",
+                              units: " g",
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: ResultContainer(
+                                    title: "Protein",
+                                    value: "${protein.toStringAsFixed(0)}",
+                                    units: " g",
+                                  ),
+                                ),
+                                SizedBox(width: 12),
+                                Expanded(
+                                  child: ResultContainer(
+                                    title: "Fats",
+                                    value: "${fats.toStringAsFixed(0)}",
+                                    units: " g",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Hero(
+                    tag: "bottomContainer",
+                    child: Material(
+                      type: MaterialType.transparency,
+                      child: MyContainerTile(
+                        child: Row(
+                          children: <Widget>[
+                            Expanded(
+                              child: ResultContainer(
+                                title: "BMI",
+                                value: "${bmi.toStringAsFixed(1)}",
+                                units: "",
+                              ),
+                            ),
+                            SizedBox(width: 12),
+                            Expanded(
+                              child: ResultContainer(
+                                title: "TDEE",
+                                value: "${tdee.toStringAsFixed(0)}",
+                                units: " Kcals",
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

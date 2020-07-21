@@ -3,6 +3,6 @@ Macro calcualtor is a simple app that calculates the required macros and calcula
 
 ## Screenshots
 <p><img height="300px" width="200px" src="screenShots/1.png" alt="macroCalculator"/> <img height="300px" width="200px" src="screenShots/2.png" alt="macroCalculator"/> <img height="300px" width="200px" src="screenShots/3.png" alt="macroCalculator"/> </p>
-
+----
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

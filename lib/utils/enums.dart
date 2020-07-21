@@ -20,17 +20,6 @@ enum Goal {
   gainWeight,
 }
 
-enum Units {
-  metric,
-  imperial,
-}
-
-Gender selectedGender = Gender.unDefined;
-ActivityLevel selectedActivityLevel = ActivityLevel.unDefined;
-Goal selectedGoal = Goal.unDefined;
-Units selectedUnit = Units.metric;
-
-class CheckVal {
-  CheckVal(this.value);
-  bool value;
-}
+Gender selectedGender = Gender.male;
+ActivityLevel selectedActivityLevel;
+Goal selectedGoal;

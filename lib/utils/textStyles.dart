@@ -1,73 +1,92 @@
 import 'package:flutter/material.dart';
 
-TextStyle myResultTitle = TextStyle(
-  color: Colors.redAccent,
-  fontFamily: 'RoboMono',
-  fontWeight: FontWeight.w700,
-  fontSize: 20.0,
-);
+class TitleTextStyles {
+  TitleTextStyles({this.size});
+  final double size;
 
-TextStyle myResultAmount = TextStyle(
-  color: Colors.white,
-  fontFamily: 'RoboMono',
-  fontSize: 18.0,
-);
+  static const light = TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w900,
+    fontStyle: FontStyle.italic,
+    fontSize: 22.0,
+    decoration: TextDecoration.none,
+    color: Colors.black,
+  );
 
-TextStyle myResultUnit = TextStyle(
-  color: Colors.grey[400],
-  fontFamily: 'RoboMono',
-  fontSize: 12.0,
-);
+  static const dark = TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w900,
+    fontStyle: FontStyle.italic,
+    fontSize: 22.0,
+    decoration: TextDecoration.none,
+    color: Colors.white,
+  );
+}
 
-TextStyle myHomeText = TextStyle(
-  color: Colors.white,
-  fontFamily: 'RoboMono',
-  fontSize: 16.0,
-);
+class HomeTitleStyle {
+  static const light = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    fontSize: 20.0,
+    color: Colors.black,
+  );
+  static const dark = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    fontSize: 20.0,
+    color: Colors.white,
+  );
+}
 
-TextStyle myTexFieldText = TextStyle(
-  fontFamily: 'RoboMono',
-  fontSize: 14.0,
-);
+class ResultTitleStyle {
+  static const light = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.w700,
+    decoration: TextDecoration.none,
+    fontSize: 20.0,
+    color: Colors.black,
+  );
+  static const dark = TextStyle(
+    fontFamily: "Poppins",
+    fontWeight: FontWeight.w700,
+    decoration: TextDecoration.none,
+    fontSize: 20.0,
+    color: Colors.white,
+  );
+}
 
-TextStyle myActivityLevelText = TextStyle(
-  fontFamily: 'RoboMono',
-  fontSize: 14.0,
-);
+class TextValueStyle {
+  static const light = TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    fontSize: 18.0,
+    color: Colors.black,
+  );
+  static const dark = TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w600,
+    decoration: TextDecoration.none,
+    fontSize: 18.0,
+    color: Colors.white,
+  );
+}
 
-TextStyle mySnackBarText = TextStyle(
-  fontFamily: 'RoboMono',
-  fontSize: 14.0,
-  color: Colors.white,
-);
-
-TextStyle myAppbarTitle = TextStyle(
-  fontFamily: 'Lexend',
-  fontSize: 24.0,
-  fontWeight: FontWeight.w700,
-  letterSpacing: 2.0,
-);
-
-TextStyle myAboutHeader = TextStyle(
-  fontFamily: 'Lexend',
-  color: Colors.redAccent,
-  fontSize: 26.0,
-  fontWeight: FontWeight.w700,
-);
-
-TextStyle mySuffixText = TextStyle(
-  fontFamily: 'RoboMono',
-  fontSize: 14.0,
-  color: Colors.grey[600],
-);
-
-TextStyle myDrawerTitle = TextStyle(
-  fontFamily: 'Lexend',
-  fontSize: 22.0,
-  fontWeight: FontWeight.w600,
-);
-
-TextStyle myVersionText = TextStyle(
-  fontFamily: 'RoboMono',
-  fontSize: 14.0,
-);
+class TextUnitStyle {
+  static const light = TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w400,
+    decoration: TextDecoration.none,
+    fontSize: 16.0,
+    color: Colors.black,
+  );
+  static const dark = TextStyle(
+    fontFamily: "Quicksand",
+    fontWeight: FontWeight.w400,
+    decoration: TextDecoration.none,
+    fontSize: 16.0,
+    color: Colors.white,
+  );
+}

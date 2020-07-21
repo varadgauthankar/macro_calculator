@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:macro_calculator/screens/aboutPage.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
 import 'package:macro_calculator/screens/resultPage.dart';
-import 'package:macro_calculator/screens/settingsPage.dart';
-import 'package:macro_calculator/utils/activityLeveltext.dart';
+import 'package:horizontal_picker/horizontal_picker.dart';
 import 'package:macro_calculator/utils/enums.dart';
-import 'package:macro_calculator/utils/extractedWidgets.dart';
+import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:macro_calculator/utils/textStyles.dart';
+import 'package:macro_calculator/utils/dynamaicTheme.dart';
 import 'package:macro_calculator/data/calc.dart';
-import 'package:macro_calculator/utils/fieldCheck.dart';
+import 'package:macro_calculator/utils/extractedWidgets.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -16,431 +16,504 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  var _formKey = GlobalKey<FormState>();
-
-  TextEditingController age = TextEditingController();
-  TextEditingController weight = TextEditingController();
-  TextEditingController weightLb = TextEditingController();
-  TextEditingController height = TextEditingController();
-  TextEditingController heightFeet = TextEditingController();
-  TextEditingController heightInch = TextEditingController();
-
-  Color inActiveColor = Colors.grey[850];
+  Color inActiveColor = Colors.grey[200];
+  Color inActiveColorDark = Colors.grey[600];
   Color activeColor = Colors.redAccent;
 
-  FocusNode _ageNode = FocusNode();
-  FocusNode _weightNode = FocusNode();
-  FocusNode _heightNode = FocusNode();
+  double age = 18, weight = 60, height = 170;
 
-  FocusNode _heightFeetNode = FocusNode();
-  FocusNode _heightInchNode = FocusNode();
+  List<String> activityLevels = [
+    'Sedentary',
+    'Lightly Active',
+    'Moderately Active',
+    'Very Active',
+    'Extremly Active'
+  ];
+  List<String> goals = ['Loose Weight', 'Maintain Weight', 'Gain Weight'];
 
-  CheckVal val = CheckVal(false);
+  String activityLevelValue = 'Moderately Active';
+  String goalValue = 'Loose Weight';
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  showSnackBar(String message) {
-    final snackBar = new SnackBar(
-      backgroundColor: Colors.grey[900],
-      content: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Icon(Icons.error_outline, color: Colors.white),
-          SizedBox(
-            width: 8.0,
-          ),
-          Text(
-            message,
-            style: mySnackBarText,
-          ),
-        ],
-      ),
-      duration: Duration(seconds: 2),
-    );
-    _scaffoldKey.currentState.showSnackBar(snackBar);
-  }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        key: _scaffoldKey,
-        drawer: Drawer(
-          child: ListView(
-            children: <Widget>[
-              UserAccountsDrawerHeader(
-                currentAccountPicture: Image(
-                  image: AssetImage('images/icon.png'),
-                ),
-                accountName: Text(
-                  'Macro Calculator',
-                  style: myDrawerTitle,
-                ),
-                accountEmail: Text(
-                  'Version: 1.1',
-                  style: myVersionText,
-                ),
-              ),
-              ListTile(
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  Navigator.pop(context);
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SettingsPage(val)));
-                },
-                leading: Icon(Icons.settings),
-                title: Text('Settings'),
-              ),
-              Divider(
-                thickness: 2,
-              ),
-              ListTile(
-                onTap: () {
-                  HapticFeedback.lightImpact();
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AboutPage()));
-                },
-                leading: Icon(Icons.info_outline),
-                title: Text('About'),
-              )
-            ],
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: FloatingActionButton.extended(
-          onPressed: () {
-            HapticFeedback.lightImpact();
-            if (_formKey.currentState.validate()) {
-              _formKey.currentState.save();
+    final mediaQuery = MediaQuery.of(context);
+    final blockVertical = mediaQuery.size.height / 100;
+    return Scaffold(
+      key: _scaffoldKey,
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(FontAwesomeIcons.check),
+        onPressed: () {
+          selectedActivityLevel = getActivityLevel();
+          selectedGoal = getGoal();
 
-              if (isGenderEmpty()) {
-                showSnackBar('Please select gender!');
-              } else if (isActivityEmpty()) {
-                showSnackBar('Please select activity level!');
-              } else if (isGoalEmpty()) {
-                showSnackBar('Please select goal!');
-              } else {
-                CalculatorBrain calc = CalculatorBrain(
-                    age: double.parse(age.text),
-                    height: selectedUnit == Units.metric
-                        ? double.parse(height.text)
-                        : (double.parse(heightFeet.text) * 30.48 +
-                            double.parse(heightInch.text) * 2.54),
-                    weight: selectedUnit == Units.metric
-                        ? double.parse(weight.text)
-                        : double.parse(weightLb.text) / 2.205);
+          CalculatorBrain calc = CalculatorBrain(
+            age: age,
+            height: height,
+            weight: weight,
+          );
 
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => ResultPage(
-                      totalCalories: calc.totalCalories().toStringAsFixed(0),
-                      carbs: calc.carb().toStringAsFixed(0),
-                      protein: calc.protein().toStringAsFixed(0),
-                      fats: calc.fat().toStringAsFixed(0),
-                      bmi: calc.bmi(),
-                      tdee: calc.tdee().toStringAsFixed(0),
-                    ),
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ResultPage(
+                totalCalories: calc.totalCalories(),
+                carbs: calc.carb(),
+                protein: calc.protein(),
+                fats: calc.fat(),
+                bmi: calc.bmi(),
+                tdee: calc.tdee(),
+              ),
+            ),
+          );
+        },
+      ),
+      body: Column(
+        children: <Widget>[
+          // App title
+          Padding(
+            padding: const EdgeInsets.only(top: 40.0, left: 12.0, right: 2.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Hero(
+                  tag: "appBarTitle",
+                  child: Text(
+                    "Macro Calculator",
+                    style: isThemeDark(context)
+                        ? TitleTextStyles.dark
+                        : TitleTextStyles.light,
                   ),
-                );
-              }
-            }
-          },
-          label: Text('Calculate'),
-        ),
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text(
-            'Macro Calculator',
-            style: myAppbarTitle,
-          ),
-        ),
-        body: Container(
-          padding: EdgeInsets.all(6),
-          child: ListView(
-            children: <Widget>[
-              MyWrappingContainer(
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                      child: MyContainerButton(
-                        child: Text(
-                          'Male',
-                          style: myHomeText,
-                        ),
-                        color: selectedGender == Gender.male
-                            ? activeColor
-                            : inActiveColor,
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          setState(() {
-                            selectedGender = Gender.male;
-                          });
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: MyContainerButton(
-                        child: Text(
-                          'Female',
-                          style: myHomeText,
-                        ),
-                        color: selectedGender == Gender.female
-                            ? activeColor
-                            : inActiveColor,
-                        onTap: () {
-                          HapticFeedback.lightImpact();
-                          setState(() {
-                            selectedGender = Gender.female;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
                 ),
-              ),
+                IconButton(
+                    iconSize: 22.0,
+                    icon: Icon(
+                      isThemeDark(context)
+                          ? FontAwesomeIcons.solidSun
+                          : FontAwesomeIcons.solidMoon,
+                    ),
+                    onPressed: () {
+                      DynamicTheme.of(context).setBrightness(
+                          Theme.of(context).brightness == Brightness.dark
+                              ? Brightness.light
+                              : Brightness.dark);
+                    })
+              ],
+            ),
+          ),
 
-              //                                                           text field
-
-              Form(
-                key: _formKey,
-                child: MyWrappingContainer(
+          Expanded(
+            child: ListView(
+              padding: EdgeInsets.all(0),
+              children: <Widget>[
+                Container(
                   child: Column(
                     children: <Widget>[
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: <Widget>[
-                          Expanded(
-                            child: MyTextField(
-                              hintText: 'Age',
-                              lableText: 'Age',
-                              suffixText: 'years',
-                              controller: age,
-                              focusNode: _ageNode,
-                              onFieldSubmitted: (_) {
-                                fieldFocusChange(
-                                    context, _ageNode, _weightNode);
-                              },
-                            ),
-                          ),
-                          selectedUnit == Units.metric
-                              ? Expanded(
-                                  child: MyTextField(
-                                    hintText: 'Weight',
-                                    lableText: 'Weight',
-                                    suffixText: 'kg',
-                                    controller: weight,
-                                    focusNode: _weightNode,
-                                    onFieldSubmitted: (_) {
-                                      fieldFocusChange(
-                                          context, _weightNode, _heightNode);
-                                    },
-                                  ),
-                                )
-                              : Expanded(
-                                  child: MyTextField(
-                                    hintText: 'Weight',
-                                    lableText: 'Weight',
-                                    suffixText: 'lb',
-                                    controller: weightLb,
-                                    focusNode: _weightNode,
-                                    onFieldSubmitted: (_) {
-                                      fieldFocusChange(context, _weightNode,
-                                          _heightFeetNode);
-                                    },
-                                  ),
-                                )
-                        ],
-                      ),
-                      selectedUnit == Units.metric
-                          ? MyTextField(
-                              hintText: 'Height',
-                              lableText: 'Height',
-                              suffixText: 'cm',
-                              controller: height,
-                              focusNode: _heightNode,
-                              onFieldSubmitted: (_) {
-                                fieldFocusChange(
-                                    context, _heightNode, _heightFeetNode);
-                              },
-                            )
-                          : Row(
-                              children: <Widget>[
-                                Expanded(
-                                  child: MyTextField(
-                                    hintText: 'Height',
-                                    lableText: 'Height',
-                                    suffixText: 'feet',
-                                    controller: heightFeet,
-                                    focusNode: _heightFeetNode,
-                                    onFieldSubmitted: (_) {
-                                      fieldFocusChange(context, _heightFeetNode,
-                                          _heightInchNode);
-                                    },
+                          Hero(
+                            tag: "topContainer",
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: SingleChildScrollView(
+                                child: MyContainerTile(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          Expanded(
+                                            child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 12, horizontal: 6),
+                                              child: Material(
+                                                color: selectedGender ==
+                                                        Gender.male
+                                                    ? activeColor
+                                                    : isThemeDark(context)
+                                                        ? inActiveColorDark
+                                                        : inActiveColor,
+                                                elevation: 4.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                shadowColor: Colors.grey,
+                                                child: InkWell(
+                                                  splashColor: Colors.redAccent,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16.0),
+                                                  child: Container(
+                                                    height: blockVertical * 5.5,
+                                                    child: Center(
+                                                        child: Text(
+                                                      "Male",
+                                                      style:
+                                                          isThemeDark(context)
+                                                              ? HomeTitleStyle
+                                                                  .dark
+                                                              : HomeTitleStyle
+                                                                  .light,
+                                                    )),
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selectedGender =
+                                                          Gender.male;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 4),
+                                          Expanded(
+                                            child: Container(
+                                              margin: EdgeInsets.symmetric(
+                                                  vertical: 12, horizontal: 6),
+                                              child: Material(
+                                                color: selectedGender ==
+                                                        Gender.female
+                                                    ? activeColor
+                                                    : isThemeDark(context)
+                                                        ? inActiveColorDark
+                                                        : inActiveColor,
+                                                elevation: 4.0,
+                                                borderRadius:
+                                                    BorderRadius.circular(12.0),
+                                                shadowColor: Colors.grey,
+                                                child: InkWell(
+                                                  splashColor: Colors.redAccent,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          16.0),
+                                                  child: Container(
+                                                    height: blockVertical * 5.5,
+                                                    child: Center(
+                                                        child: Text(
+                                                      "Female",
+                                                      style:
+                                                          isThemeDark(context)
+                                                              ? HomeTitleStyle
+                                                                  .dark
+                                                              : HomeTitleStyle
+                                                                  .light,
+                                                    )),
+                                                  ),
+                                                  onTap: () {
+                                                    setState(() {
+                                                      selectedGender =
+                                                          Gender.female;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+
+                                      //! height slider
+                                      Container(
+                                        margin: EdgeInsets.all(6),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  "Height",
+                                                  style: isThemeDark(context)
+                                                      ? HomeTitleStyle.dark
+                                                      : HomeTitleStyle.light,
+                                                ),
+                                                Text(
+                                                  "${height.toStringAsFixed(0)} cm",
+                                                  style: isThemeDark(context)
+                                                      ? TextUnitStyle.dark
+                                                      : TextUnitStyle.light,
+                                                ),
+                                              ],
+                                            ),
+                                            SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(
+                                                activeTrackColor: activeColor,
+                                                inactiveTrackColor:
+                                                    inActiveColor,
+                                                trackShape:
+                                                    CustomTrackShape(), //RoundedRectSliderTrackShape(),
+                                                trackHeight: 8.0,
+                                                thumbColor: Colors.redAccent,
+                                                thumbShape:
+                                                    RoundSliderThumbShape(
+                                                        enabledThumbRadius:
+                                                            12.0),
+                                                overlayColor:
+                                                    Colors.red.withAlpha(32),
+                                              ),
+                                              child: Material(
+                                                type: MaterialType.transparency,
+                                                child: Slider(
+                                                  min: 100,
+                                                  max: 220,
+                                                  value: height,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      String val = value
+                                                          .toStringAsFixed(0);
+                                                      height =
+                                                          double.parse(val);
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+
+                                      //! weight slider
+                                      Container(
+                                        margin: EdgeInsets.all(6),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  "Weight",
+                                                  style: isThemeDark(context)
+                                                      ? HomeTitleStyle.dark
+                                                      : HomeTitleStyle.light,
+                                                ),
+                                                Text(
+                                                  "${weight.toStringAsFixed(0)} kg",
+                                                  style: isThemeDark(context)
+                                                      ? TextUnitStyle.dark
+                                                      : TextUnitStyle.light,
+                                                ),
+                                              ],
+                                            ),
+                                            SliderTheme(
+                                              data: SliderTheme.of(context)
+                                                  .copyWith(
+                                                activeTrackColor: activeColor,
+                                                inactiveTrackColor:
+                                                    inActiveColor,
+                                                trackShape:
+                                                    CustomTrackShape(), //RoundedRectSliderTrackShape(),
+                                                trackHeight: 8.0,
+                                                thumbColor: Colors.redAccent,
+                                                thumbShape:
+                                                    RoundSliderThumbShape(
+                                                        enabledThumbRadius:
+                                                            12.0),
+                                                overlayColor:
+                                                    Colors.red.withAlpha(32),
+                                              ),
+                                              child: Material(
+                                                type: MaterialType.transparency,
+                                                child: Slider(
+                                                  min: 20,
+                                                  max: 140,
+                                                  value: weight,
+                                                  onChanged: (value) {
+                                                    setState(() {
+                                                      String val = value
+                                                          .toStringAsFixed(0);
+                                                      weight =
+                                                          double.parse(val);
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      // age number picker
+                                      Container(
+                                        padding: EdgeInsets.all(6),
+                                        child: Column(
+                                          children: <Widget>[
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: <Widget>[
+                                                Text(
+                                                  "Age",
+                                                  style: isThemeDark(context)
+                                                      ? HomeTitleStyle.dark
+                                                      : HomeTitleStyle.light,
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                      HorizantalPicker(
+                                        minValue: 5,
+                                        maxValue: 80,
+                                        divisions: 75,
+                                        showCursor: true,
+                                        backgroundColor: isThemeDark(context)
+                                            ? Colors.grey[800]
+                                            : Colors.white,
+                                        initialPosition: InitialPosition.center,
+                                        activeItemTextColor: Colors.redAccent,
+                                        onChanged: (value) {
+                                          setState(() {
+                                            age = value;
+                                          });
+                                        },
+                                      ),
+                                      //SizedBox(height: 12)
+                                    ],
                                   ),
                                 ),
-                                Expanded(
-                                  child: MyTextField(
-                                    hintText: 'Height',
-                                    lableText: 'Height',
-                                    suffixText: 'inch',
-                                    controller: heightInch,
-                                    focusNode: _heightInchNode,
-                                  ),
-                                )
-                              ],
+                              ),
                             ),
+                          ),
+
+                          //! second container
+                          Hero(
+                            tag: "bottomContainer",
+                            child: Material(
+                              type: MaterialType.transparency,
+                              child: SingleChildScrollView(
+                                child: MyContainerTile(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Text(
+                                        "Activity level",
+                                        style: isThemeDark(context)
+                                            ? HomeTitleStyle.dark
+                                            : HomeTitleStyle.light,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 24),
+                                        child: DropdownButton<String>(
+                                          value: activityLevelValue,
+                                          icon:
+                                              Icon(FontAwesomeIcons.caretDown),
+                                          iconSize: 18,
+                                          elevation: 4,
+                                          underline: Container(
+                                            height: 3,
+                                            color: Colors.redAccent,
+                                          ),
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              activityLevelValue = newValue;
+                                            });
+                                          },
+                                          items: activityLevels
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: isThemeDark(context)
+                                                    ? TextUnitStyle.dark
+                                                    : TextUnitStyle.light,
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                      SizedBox(height: 8),
+                                      Text(
+                                        "Goal",
+                                        style: isThemeDark(context)
+                                            ? HomeTitleStyle.dark
+                                            : HomeTitleStyle.light,
+                                      ),
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 24),
+                                        child: DropdownButton<String>(
+                                          value: goalValue,
+                                          icon:
+                                              Icon(FontAwesomeIcons.caretDown),
+                                          iconSize: 18,
+                                          elevation: 4,
+                                          underline: Container(
+                                            height: 3,
+                                            color: Colors.redAccent,
+                                          ),
+                                          onChanged: (String newValue) {
+                                            setState(() {
+                                              goalValue = newValue;
+                                            });
+                                          },
+                                          items: goals
+                                              .map<DropdownMenuItem<String>>(
+                                                  (String value) {
+                                            return DropdownMenuItem<String>(
+                                              value: value,
+                                              child: Text(
+                                                value,
+                                                style: isThemeDark(context)
+                                                    ? TextUnitStyle.dark
+                                                    : TextUnitStyle.light,
+                                              ),
+                                            );
+                                          }).toList(),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ],
                   ),
                 ),
-              ),
-
-              //                                                            text field end
-
-              MyWrappingContainer(
-                child: Column(
-                  children: <Widget>[
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        MyActivityBars(
-                          onTap: () {
-                            HapticFeedback.lightImpact();
-                            setState(() {
-                              selectedActivityLevel = ActivityLevel.sedentary;
-                            });
-                          },
-                          height: 35,
-                          color:
-                              selectedActivityLevel == ActivityLevel.sedentary
-                                  ? activeColor
-                                  : inActiveColor,
-                        ),
-                        MyActivityBars(
-                          onTap: () {
-                            HapticFeedback.lightImpact();
-                            setState(() {
-                              selectedActivityLevel =
-                                  ActivityLevel.lightlyActive;
-                            });
-                          },
-                          height: 55,
-                          color: selectedActivityLevel ==
-                                  ActivityLevel.lightlyActive
-                              ? activeColor
-                              : inActiveColor,
-                        ),
-                        MyActivityBars(
-                          onTap: () {
-                            HapticFeedback.lightImpact();
-                            setState(() {
-                              selectedActivityLevel =
-                                  ActivityLevel.moderatelyActive;
-                            });
-                          },
-                          height: 75,
-                          color: selectedActivityLevel ==
-                                  ActivityLevel.moderatelyActive
-                              ? activeColor
-                              : inActiveColor,
-                        ),
-                        MyActivityBars(
-                          onTap: () {
-                            HapticFeedback.lightImpact();
-                            setState(() {
-                              selectedActivityLevel = ActivityLevel.veryActive;
-                            });
-                          },
-                          height: 95,
-                          color:
-                              selectedActivityLevel == ActivityLevel.veryActive
-                                  ? activeColor
-                                  : inActiveColor,
-                        ),
-                        MyActivityBars(
-                          onTap: () {
-                            HapticFeedback.lightImpact();
-                            setState(() {
-                              selectedActivityLevel =
-                                  ActivityLevel.extremlyActive;
-                            });
-                          },
-                          height: 115,
-                          color: selectedActivityLevel ==
-                                  ActivityLevel.extremlyActive
-                              ? activeColor
-                              : inActiveColor,
-                        ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: Text(
-                        activityLevelText(),
-                        style: myActivityLevelText,
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-              MyWrappingContainer(
-                child: Column(
-                  children: <Widget>[
-                    MyContainerButton(
-                      child: Text(
-                        'Loose weight',
-                        style: myHomeText,
-                      ),
-                      onTap: () {
-                        HapticFeedback.lightImpact();
-                        setState(() {
-                          selectedGoal = Goal.looseWeight;
-                        });
-                      },
-                      color: selectedGoal == Goal.looseWeight
-                          ? activeColor
-                          : inActiveColor,
-                    ),
-                    MyContainerButton(
-                      child: Text(
-                        'Maintain weight',
-                        style: myHomeText,
-                      ),
-                      onTap: () {
-                        HapticFeedback.lightImpact();
-                        setState(() {
-                          selectedGoal = Goal.maintainWeight;
-                        });
-                      },
-                      color: selectedGoal == Goal.maintainWeight
-                          ? activeColor
-                          : inActiveColor,
-                    ),
-                    MyContainerButton(
-                      child: Text(
-                        'Gain weight',
-                        style: myHomeText,
-                      ),
-                      onTap: () {
-                        HapticFeedback.lightImpact();
-                        setState(() {
-                          selectedGoal = Goal.gainWeight;
-                        });
-                      },
-                      color: selectedGoal == Goal.gainWeight
-                          ? activeColor
-                          : inActiveColor,
-                    ),
-                  ],
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
+        ],
       ),
     );
+  }
+
+  ActivityLevel getActivityLevel() {
+    if (activityLevelValue == "Sedentary")
+      return ActivityLevel.sedentary;
+    else if (activityLevelValue == "Lightly Active")
+      return ActivityLevel.lightlyActive;
+    else if (activityLevelValue == "Moderately Active")
+      return ActivityLevel.moderatelyActive;
+    else if (activityLevelValue == "Very Active")
+      return ActivityLevel.veryActive;
+    else if (activityLevelValue == "Extremly Active")
+      return ActivityLevel.extremlyActive;
+    else
+      return null;
+  }
+
+  Goal getGoal() {
+    if (goalValue == "Loose Weight")
+      return Goal.looseWeight;
+    else if (goalValue == "Maintain Weight")
+      return Goal.maintainWeight;
+    else if (goalValue == "Gain Weight")
+      return Goal.gainWeight;
+    else
+      return null;
   }
 }
