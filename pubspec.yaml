@@ -1,6 +1,6 @@
 name: macro_calculator
 description: A new Flutter project.
-version: 3.0.1
+version: 3.2.1+5
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
