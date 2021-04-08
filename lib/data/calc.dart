@@ -87,11 +87,11 @@ class CalculatorBrain {
   }
 
   double loFat() {
-    return 0.20 * tdee();
+    return 0.20 * totalCalories();
   }
 
   double loCarb() {
-    return (tdee() - (loFat() + loPro()));
+    return (totalCalories() - (loFat() + loPro()));
   }
 
   //maintain weight
@@ -100,11 +100,11 @@ class CalculatorBrain {
   }
 
   double mnFat() {
-    return 0.20 * tdee();
+    return 0.20 * totalCalories();
   }
 
   double mnCarb() {
-    return tdee() - (mnPro() + mnFat());
+    return totalCalories() - (mnPro() + mnFat());
   }
 
   //gain weight
@@ -113,10 +113,10 @@ class CalculatorBrain {
   }
 
   double gnFat() {
-    return 0.25 * tdee();
+    return 0.25 * totalCalories();
   }
 
   double gnCarb() {
-    return tdee() - (gnFat() + gnPro());
+    return totalCalories() - (gnFat() + gnPro());
   }
 }
