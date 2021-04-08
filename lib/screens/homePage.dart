@@ -29,10 +29,10 @@ class _HomePageState extends State<HomePage> {
     'Very Active',
     'Extremly Active'
   ];
-  List<String> goals = ['Loose Weight', 'Maintain Weight', 'Gain Weight'];
+  List<String> goals = ['Lose Weight', 'Maintain Weight', 'Gain Weight'];
 
   String activityLevelValue = 'Moderately Active';
-  String goalValue = 'Loose Weight';
+  String goalValue = 'Lose Weight';
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -507,7 +507,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   Goal getGoal() {
-    if (goalValue == "Loose Weight")
+    if (goalValue == "Lose Weight")
       return Goal.looseWeight;
     else if (goalValue == "Maintain Weight")
       return Goal.maintainWeight;
