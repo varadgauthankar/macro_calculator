@@ -8,11 +8,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  horizontal_picker: ^1.0.0
   cupertino_icons: ^0.1.2
-  font_awesome_flutter: ^8.7.0
-  dynamic_theme: ^1.0.1
+  eva_icons_flutter: ^3.0.0
+  numberpicker: ^2.1.1
 
 dev_dependencies:
   flutter_test:
