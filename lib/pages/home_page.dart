@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:macro_calculator/controllers/data_controller.dart';
+import 'package:macro_calculator/controllers/theme_controller.dart';
 
 import 'package:macro_calculator/pages/results_page.dart';
 import 'package:macro_calculator/utils/colors.dart';
@@ -44,7 +45,9 @@ class _HomePageState extends State<HomePage> {
               isThemeDark(context) ? EvaIcons.sun : EvaIcons.moon,
               color: isThemeDark(context) ? MyColors.white : MyColors.black,
             ),
-            onPressed: () {},
+            onPressed: () =>
+                Provider.of<ThemeController>(context, listen: false)
+                    .toggleTheme(),
           )
         ],
       ),
