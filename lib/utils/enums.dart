@@ -1,25 +1,18 @@
 enum Gender {
-  unDefined,
   male,
   female,
 }
 
 enum ActivityLevel {
-  unDefined,
   sedentary,
-  lightlyActive,
-  moderatelyActive,
-  veryActive,
-  extremlyActive,
+  lightly,
+  moderately,
+  very,
+  extremly,
 }
 
 enum Goal {
-  unDefined,
-  looseWeight,
-  maintainWeight,
-  gainWeight,
+  loose,
+  maintain,
+  gain,
 }
-
-Gender selectedGender = Gender.male;
-ActivityLevel selectedActivityLevel;
-Goal selectedGoal;

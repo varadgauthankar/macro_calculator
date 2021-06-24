@@ -1,16 +1,19 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:macro_calculator/controllers/data_controller.dart';
 
 import 'package:macro_calculator/pages/results_page.dart';
 import 'package:macro_calculator/utils/colors.dart';
 import 'package:macro_calculator/utils/enums.dart';
 import 'package:macro_calculator/utils/helpers.dart';
 import 'package:macro_calculator/utils/textStyles.dart';
-import 'package:macro_calculator/data/calc.dart';
+import 'package:macro_calculator/data/calculator.dart';
 import 'package:macro_calculator/widgets/my_button.dart';
+import 'package:macro_calculator/widgets/my_drop_down_button.dart';
 import 'package:macro_calculator/widgets/slider.dart';
 import 'package:macro_calculator/widgets/tile.dart';
 import 'package:numberpicker/numberpicker.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -18,26 +21,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  Color inActiveColor = Colors.grey[200];
-  Color inActiveColorDark = Colors.grey[600];
-  Color activeColor = Colors.redAccent;
-
-  double age = 18, weight = 60, height = 170;
-
-  List<String> activityLevels = [
-    'Sedentary',
-    'Lightly Active',
-    'Moderately Active',
-    'Very Active',
-    'Extremly Active'
-  ];
-  List<String> goals = ['Lose Weight', 'Maintain Weight', 'Gain Weight'];
-
-  String activityLevelValue = 'Moderately Active';
-  String goalValue = 'Lose Weight';
-
   @override
   Widget build(BuildContext context) {
+    var dataController = Provider.of<DataController>(context);
+
     return Scaffold(
       backgroundColor:
           isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
@@ -73,14 +60,20 @@ class _HomePageState extends State<HomePage> {
                     Expanded(
                       child: MyButton(
                         title: 'Male',
-                        onTap: () {},
+                        color: dataController.gender == Gender.male
+                            ? MyColors.accentColor
+                            : MyColors.white,
+                        onTap: () => dataController.setGender(Gender.male),
                       ),
                     ),
                     spacer(width: 12),
                     Expanded(
                       child: MyButton(
                         title: 'Female',
-                        onTap: () {},
+                        color: dataController.gender == Gender.female
+                            ? MyColors.accentColor
+                            : MyColors.white,
+                        onTap: () => dataController.setGender(Gender.female),
                       ),
                     ),
                   ],
@@ -101,7 +94,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Text(
-                          "${height.toStringAsFixed(0)}",
+                          "${dataController.height.toStringAsFixed(0)}",
                           style: isThemeDark(context)
                               ? ValueStyle.dark
                               : ValueStyle.light,
@@ -117,10 +110,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 MyCustomSlider(
-                  value: height,
+                  value: dataController.height,
                   min: 100,
                   max: 220,
-                  onChanged: (value) {},
+                  onChanged: (value) => dataController.setHeight(value),
                 ),
 
                 //! weight slider
@@ -136,13 +129,13 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Text(
-                          "${weight.toStringAsFixed(0)}",
+                          "${dataController.weight.toStringAsFixed(0)}",
                           style: isThemeDark(context)
                               ? ValueStyle.dark
                               : ValueStyle.light,
                         ),
                         Text(
-                          " cm",
+                          " kg",
                           style: isThemeDark(context)
                               ? ValueStyleUnit.dark
                               : ValueStyleUnit.light,
@@ -152,10 +145,10 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 MyCustomSlider(
-                  value: weight,
+                  value: dataController.weight,
                   min: 40,
                   max: 150,
-                  onChanged: (value) {},
+                  onChanged: (value) => dataController.setWeight(value),
                 ),
                 // age number picker
                 Text(
@@ -173,13 +166,9 @@ class _HomePageState extends State<HomePage> {
                         ? SubtitleStyle.dark
                         : SubtitleStyle.light,
                     selectedTextStyle: ResultValueStyle.lightDark,
-                    value: age.toInt(),
+                    value: dataController.age,
                     axis: Axis.horizontal,
-                    onChanged: (value) {
-                      setState(() {
-                        age = value.toDouble();
-                      });
-                    },
+                    onChanged: (value) => dataController.setAge(value),
                   ),
                 )
               ],
@@ -196,34 +185,9 @@ class _HomePageState extends State<HomePage> {
                   style:
                       isThemeDark(context) ? TitleStyle.dark : TitleStyle.light,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: DropdownButton<String>(
-                    value: activityLevelValue,
-                    icon: Icon(EvaIcons.arrowDown),
-                    elevation: 3,
-                    underline: Container(
-                      height: 3,
-                      color: Colors.redAccent,
-                    ),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        activityLevelValue = newValue;
-                      });
-                    },
-                    items: activityLevels
-                        .map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: isThemeDark(context)
-                              ? SubtitleStyle.dark
-                              : SubtitleStyle.light,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                MyDropDownButtonActivityLevel(
+                  value: dataController.activityLevel,
+                  onChanged: (value) => dataController.setActivityLevel(value),
                 ),
                 SizedBox(height: 8),
                 Text(
@@ -231,33 +195,9 @@ class _HomePageState extends State<HomePage> {
                   style:
                       isThemeDark(context) ? TitleStyle.dark : TitleStyle.light,
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 24),
-                  child: DropdownButton<String>(
-                    value: goalValue,
-                    icon: Icon(EvaIcons.arrowDown),
-                    elevation: 3,
-                    underline: Container(
-                      height: 3,
-                      color: Colors.redAccent,
-                    ),
-                    onChanged: (String newValue) {
-                      setState(() {
-                        goalValue = newValue;
-                      });
-                    },
-                    items: goals.map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: isThemeDark(context)
-                              ? SubtitleStyle.dark
-                              : SubtitleStyle.light,
-                        ),
-                      );
-                    }).toList(),
-                  ),
+                MyDropDownButtonGoal(
+                  value: dataController.goal,
+                  onChanged: (value) => dataController.setGoal(value),
                 ),
               ],
             ),
@@ -268,56 +208,31 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         child: Icon(EvaIcons.checkmark),
         onPressed: () {
-          selectedActivityLevel = getActivityLevel();
-          selectedGoal = getGoal();
-
-          CalculatorBrain calc = CalculatorBrain(
-            age: age,
-            height: height,
-            weight: weight,
+          Calculator calculator = Calculator(
+            gender: dataController.gender,
+            height: dataController.height,
+            weight: dataController.weight,
+            age: dataController.age,
+            activityLevel: dataController.activityLevel,
+            goal: dataController.goal,
           );
 
           Navigator.push(
             context,
             MaterialPageRoute(
               builder: (context) => ResultPage(
-                totalCalories: calc.totalCalories(),
-                carbs: calc.carb(),
-                protein: calc.protein(),
-                fats: calc.fat(),
-                bmi: calc.bmi(),
-                tdee: calc.tdee(),
+                totalCalories: calculator.totalCalories(),
+                carbs: calculator.carb(),
+                protein: calculator.protein(),
+                fats: calculator.fat(),
+                bmi: calculator.bmi(),
+                tdee: calculator.tdee(),
+                bmiScale: calculator.bmiScale(),
               ),
             ),
           );
         },
       ),
     );
-  }
-
-  ActivityLevel getActivityLevel() {
-    if (activityLevelValue == "Sedentary")
-      return ActivityLevel.sedentary;
-    else if (activityLevelValue == "Lightly Active")
-      return ActivityLevel.lightlyActive;
-    else if (activityLevelValue == "Moderately Active")
-      return ActivityLevel.moderatelyActive;
-    else if (activityLevelValue == "Very Active")
-      return ActivityLevel.veryActive;
-    else if (activityLevelValue == "Extremly Active")
-      return ActivityLevel.extremlyActive;
-    else
-      return null;
-  }
-
-  Goal getGoal() {
-    if (goalValue == "Lose Weight")
-      return Goal.looseWeight;
-    else if (goalValue == "Maintain Weight")
-      return Goal.maintainWeight;
-    else if (goalValue == "Gain Weight")
-      return Goal.gainWeight;
-    else
-      return null;
   }
 }

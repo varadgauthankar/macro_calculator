@@ -7,12 +7,13 @@ import 'package:macro_calculator/widgets/result_tile.dart';
 
 class ResultPage extends StatelessWidget {
   ResultPage({
-    @required this.totalCalories,
-    @required this.carbs,
-    @required this.protein,
-    @required this.fats,
-    @required this.bmi,
-    @required this.tdee,
+    this.totalCalories,
+    this.carbs,
+    this.protein,
+    this.fats,
+    this.bmi,
+    this.tdee,
+    this.bmiScale,
   });
 
   final double totalCalories;
@@ -21,6 +22,7 @@ class ResultPage extends StatelessWidget {
   final double fats;
   final double bmi;
   final double tdee;
+  final String bmiScale;
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +88,7 @@ class ResultPage extends StatelessWidget {
                 child: ResultTile(
                   title: "BMI",
                   value: "${bmi.toStringAsFixed(1)}",
-                  units: "BMI",
+                  units: bmiScale,
                 ),
               ),
               Expanded(

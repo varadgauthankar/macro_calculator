@@ -11,3 +11,9 @@ Widget spacer({double height = 0, double width = 0}) {
 bool isThemeDark(BuildContext context) {
   return Theme.of(context).brightness == Brightness.dark ? true : false;
 }
+
+extension stringExtension on String {
+  String firstCapital() {
+    return "${this[0].toUpperCase()}${this.substring(1)}";
+  }
+}
