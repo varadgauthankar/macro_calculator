@@ -2,7 +2,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:macro_calculator/controllers/data_controller.dart';
 import 'package:macro_calculator/controllers/theme_controller.dart';
-
 import 'package:macro_calculator/pages/results_page.dart';
 import 'package:macro_calculator/utils/colors.dart';
 import 'package:macro_calculator/utils/enums.dart';
@@ -22,6 +21,11 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     var dataController = Provider.of<DataController>(context);

@@ -10,6 +10,8 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^0.1.2
   eva_icons_flutter: ^3.0.0
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
   numberpicker: ^2.1.1
   path_provider: ^2.0.2
   provider: ^5.0.0
@@ -23,19 +25,3 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-
-  fonts:
-    - family: Quicksand
-      fonts:
-        - asset: fonts/Quicksand/Quicksand-Bold.ttf
-        - asset: fonts/Quicksand/Quicksand-Light.ttf
-        - asset: fonts/Quicksand/Quicksand-Medium.ttf
-        - asset: fonts/Quicksand/Quicksand-Regular.ttf
-        - asset: fonts/Quicksand/Quicksand-SemiBold.ttf
-
-    - family: Poppins
-      fonts:
-        - asset: fonts/poppins/Poppins-Regular.ttf
-        - asset: fonts/poppins/Poppins-Medium.ttf
-        - asset: fonts/poppins/Poppins-Bold.ttf
-        - asset: fonts/poppins/Poppins-Black.ttf

@@ -1,10 +1,15 @@
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:macro_calculator/controllers/data_controller.dart';
 import 'package:macro_calculator/controllers/theme_controller.dart';
 import 'package:macro_calculator/pages/home_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  await Hive.initFlutter();
+  await Hive.openBox('data');
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
