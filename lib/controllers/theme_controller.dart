@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 class ThemeController extends ChangeNotifier {
   Brightness brightness = Brightness.light;
-  String key = 'brightness';
+  Box box = Hive.box('theme');
 
   ThemeController() {
-    saveToPrefs();
-    getFromPrefs().then((value) => brightness = value);
+    brightness = Brightness.values[box.get('brightness') ?? 1];
   }
 
   void toggleTheme() {
@@ -15,18 +14,7 @@ class ThemeController extends ChangeNotifier {
       this.brightness = Brightness.light;
     else
       this.brightness = Brightness.dark;
-    saveToPrefs();
+    box.put('brightness', brightness.index);
     notifyListeners();
-  }
-
-  saveToPrefs() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString(key, brightness.toString());
-  }
-
-  Future<Brightness> getFromPrefs() async {
-    var prefs = await SharedPreferences.getInstance();
-    var value = prefs.getString(key);
-    return Brightness.values.firstWhere((e) => e.toString() == value);
   }
 }
