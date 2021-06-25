@@ -99,11 +99,11 @@ class Calculator {
   //carbs
   double carb() {
     if (goal == Goal.loose) {
-      return (totalCalories() - (fat() + protein())) / 4;
+      return (totalCalories() - (fat() * 9 + protein() * 4)) / 4;
     } else if (goal == Goal.maintain) {
-      return totalCalories() - (protein() + fat()) / 4;
+      return totalCalories() - (protein() * 4 + fat() * 9) / 4;
     } else if (goal == Goal.gain) {
-      return totalCalories() - (fat() + protein()) / 4;
+      return totalCalories() - (fat() * 9 + protein() * 4) / 4;
     }
     return 0;
   }
