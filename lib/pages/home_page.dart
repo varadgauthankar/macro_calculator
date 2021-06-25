@@ -45,6 +45,7 @@ class _HomePageState extends State<HomePage> {
         ),
         actions: [
           IconButton(
+            tooltip: isThemeDark(context) ? 'Light Mode' : 'Dark Mode',
             icon: Icon(
               isThemeDark(context) ? EvaIcons.sun : EvaIcons.moon,
               color: isThemeDark(context) ? MyColors.white : MyColors.black,
@@ -69,7 +70,9 @@ class _HomePageState extends State<HomePage> {
                         title: 'Male',
                         color: dataController.gender == Gender.male
                             ? MyColors.accentColor
-                            : MyColors.white,
+                            : isThemeDark(context)
+                                ? MyColors.darkGrey
+                                : MyColors.white,
                         onTap: () => dataController.setGender(Gender.male),
                       ),
                     ),
@@ -79,7 +82,9 @@ class _HomePageState extends State<HomePage> {
                         title: 'Female',
                         color: dataController.gender == Gender.female
                             ? MyColors.accentColor
-                            : MyColors.white,
+                            : isThemeDark(context)
+                                ? MyColors.darkGrey
+                                : MyColors.white,
                         onTap: () => dataController.setGender(Gender.female),
                       ),
                     ),
@@ -213,7 +218,9 @@ class _HomePageState extends State<HomePage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
       floatingActionButton: FloatingActionButton(
+        tooltip: 'Calculate',
         child: Icon(EvaIcons.checkmark),
+        foregroundColor: MyColors.black,
         onPressed: () {
           Calculator calculator = Calculator(
             gender: dataController.gender,
