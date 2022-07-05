@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:macro_calculator/utils/colors.dart';
-import 'package:macro_calculator/utils/helpers.dart';
 
 class Tile extends StatelessWidget {
   final Widget child;

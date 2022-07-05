@@ -1,9 +1,6 @@
 import 'dart:io';
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:macro_calculator/utils/colors.dart';
-import 'package:macro_calculator/utils/helpers.dart';
-import 'package:macro_calculator/utils/textStyles.dart';
 import 'package:macro_calculator/widgets/result_tile.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:screenshot/screenshot.dart';
@@ -36,7 +33,6 @@ class ResultPage extends StatelessWidget {
         title: Text("Results"),
         leading: IconButton(
           icon: Icon(EvaIcons.arrowIosBack),
-          color: isThemeDark(context) ? MyColors.white : MyColors.black,
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -105,7 +101,6 @@ class ResultPage extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         tooltip: 'share',
         child: Icon(Icons.share_outlined),
-        foregroundColor: MyColors.black,
         onPressed: () => shareScreenshot(screenshotController),
       ),
     );

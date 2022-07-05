@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:macro_calculator/controllers/data_controller.dart';
 import 'package:macro_calculator/controllers/theme_controller.dart';
 import 'package:macro_calculator/pages/results_page.dart';
-import 'package:macro_calculator/utils/colors.dart';
 import 'package:macro_calculator/utils/enums.dart';
 import 'package:macro_calculator/utils/helpers.dart';
 import 'package:macro_calculator/utils/textStyles.dart';
@@ -40,7 +39,6 @@ class _HomePageState extends State<HomePage> {
             tooltip: isThemeDark(context) ? 'Light Mode' : 'Dark Mode',
             icon: Icon(
               isThemeDark(context) ? EvaIcons.sun : EvaIcons.moon,
-              color: isThemeDark(context) ? MyColors.white : MyColors.black,
             ),
             onPressed: () =>
                 Provider.of<ThemeController>(context, listen: false)
@@ -193,7 +191,6 @@ class _HomePageState extends State<HomePage> {
       floatingActionButton: FloatingActionButton(
         tooltip: 'Calculate',
         child: Icon(EvaIcons.checkmark),
-        foregroundColor: MyColors.black,
         onPressed: () {
           Calculator calculator = Calculator(
             gender: dataController.gender!,
