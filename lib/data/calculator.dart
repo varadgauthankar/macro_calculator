@@ -55,7 +55,7 @@ class Calculator {
       return bmr() * 1.55;
     else if (activityLevel == ActivityLevel.very)
       return bmr() * 1.725;
-    else if (activityLevel == ActivityLevel.extremly)
+    else if (activityLevel == ActivityLevel.extremely)
       return bmr() * 1.9;
     else
       return 0;
