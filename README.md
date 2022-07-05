@@ -6,7 +6,11 @@ Macro calcualtor is a simple app that calculates the required macros and calcula
 
 ## Screenshots
 
-<p><img height="328px" width="175px" src="screenshots/1.png" alt="macroCalculator"/> <img height="328px" width="175px" src="screenshots/2.png" alt="macroCalculator"/> <img height="328px" width="175px" src="screenshots/3.png" alt="macroCalculator"/><img height="328px" width="175px" src="screenshots/4.png" alt="macroCalculator"/> </p>
+<p>
+<img height="328px" width="175px" src="screenshots/1.png" alt="macroCalculator"/>
+<img height="328px" width="175px" src="screenshots/2.png" alt="macroCalculator"/>
+<img height="328px" width="175px" src="screenshots/3.png" alt="macroCalculator"/>
+<img height="328px" width="175px" src="screenshots/4.png" alt="macroCalculator"/> </p>
 
 ## License
 
