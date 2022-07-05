@@ -55,7 +55,8 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: MyButton(
-                        title: 'MALE',
+                        icon: Icons.male,
+                        title: 'Male',
                         selected: dataController.gender == Gender.male,
                         onTap: () => dataController.setGender(Gender.male),
                       ),
@@ -63,7 +64,8 @@ class _HomePageState extends State<HomePage> {
                     spacer(width: 12),
                     Expanded(
                       child: MyButton(
-                        title: 'FEMALE',
+                        icon: Icons.female,
+                        title: 'Female',
                         selected: dataController.gender == Gender.female,
                         onTap: () => dataController.setGender(Gender.female),
                       ),

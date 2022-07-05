@@ -18,11 +18,11 @@ class MyCustomSlider extends StatelessWidget {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         trackShape: CustomTrackShape(),
-        trackHeight: 8.0,
+        trackHeight: 6.0,
         // thumbColor: Theme.of(context).colorScheme.secondary,
         // activeTrackColor: Theme.of(context).colorScheme.secondary,
         // inactiveTrackColor: Theme.of(context).colorScheme.onSurfaceVariant,
-        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
+        thumbShape: RoundSliderThumbShape(enabledThumbRadius: 10.0),
         // overlayColor: Colors.red.withAlpha(32),
       ),
       child: Slider(

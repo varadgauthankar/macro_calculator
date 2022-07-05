@@ -23,6 +23,7 @@ class MyDropDownMenu<T> extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 12.0),
       child: DropdownButton<T>(
+        borderRadius: BorderRadius.circular(12),
         value: value,
         icon: Icon(EvaIcons.chevronDown),
         elevation: 3,

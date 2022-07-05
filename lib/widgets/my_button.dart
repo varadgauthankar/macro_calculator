@@ -5,8 +5,10 @@ class MyButton extends StatelessWidget {
   final Function() onTap;
   final String title;
   final bool selected;
+  final IconData icon;
   const MyButton({
     Key? key,
+    required this.icon,
     required this.onTap,
     required this.title,
     this.selected = false,
@@ -27,13 +29,25 @@ class MyButton extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.all(12.0),
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                      color: selected
-                          ? colorScheme(context).onPrimary
-                          : colorScheme(context).onSecondary,
-                    ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: selected
+                        ? colorScheme(context).onPrimary
+                        : colorScheme(context).onSecondary,
+                  ),
+                  spacer(width: 6),
+                  Text(
+                    title,
+                    style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                          color: selected
+                              ? colorScheme(context).onPrimary
+                              : colorScheme(context).onSecondary,
+                        ),
+                  ),
+                ],
               ),
             ),
           ),
