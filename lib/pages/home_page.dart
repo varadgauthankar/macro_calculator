@@ -169,7 +169,8 @@ class _HomePageState extends State<HomePage> {
                   "Activity level",
                   style: MyTextStyles(context).cardTitle,
                 ),
-                MyDropDownButtonActivityLevel(
+                MyDropDown<ActivityLevel>(
+                  items: ActivityLevel.values,
                   value: dataController.activityLevel,
                   onChanged: (value) => dataController.setActivityLevel(value),
                 ),
@@ -178,7 +179,8 @@ class _HomePageState extends State<HomePage> {
                   "Goal",
                   style: MyTextStyles(context).cardTitle,
                 ),
-                MyDropDownButtonGoal(
+                MyDropDown<Goal>(
+                  items: Goal.values,
                   value: dataController.goal,
                   onChanged: (value) => dataController.setGoal(value),
                 ),
