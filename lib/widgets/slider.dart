@@ -14,21 +14,18 @@ class MyCustomSlider extends StatelessWidget {
     return SliderTheme(
       data: SliderTheme.of(context).copyWith(
         trackShape: CustomTrackShape(),
-        trackHeight: 6.0,
-        thumbColor: Colors.redAccent,
-        activeTrackColor: Colors.redAccent,
-        inactiveTrackColor: Colors.grey[300],
+        trackHeight: 8.0,
+        // thumbColor: Theme.of(context).colorScheme.secondary,
+        // activeTrackColor: Theme.of(context).colorScheme.secondary,
+        // inactiveTrackColor: Theme.of(context).colorScheme.onSurfaceVariant,
         thumbShape: RoundSliderThumbShape(enabledThumbRadius: 12.0),
-        overlayColor: Colors.red.withAlpha(32),
+        // overlayColor: Colors.red.withAlpha(32),
       ),
-      child: Material(
-        type: MaterialType.transparency,
-        child: Slider(
-          min: min,
-          max: max,
-          value: value,
-          onChanged: onChanged,
-        ),
+      child: Slider(
+        min: min,
+        max: max,
+        value: value,
+        onChanged: onChanged,
       ),
     );
   }

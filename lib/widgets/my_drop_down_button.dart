@@ -1,5 +1,5 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:macro_calculator/utils/enums.dart';
 import 'package:macro_calculator/utils/helpers.dart';
@@ -25,7 +25,7 @@ class MyDropDownButtonActivityLevel extends StatelessWidget {
         elevation: 3,
         underline: Container(
           height: 3,
-          color: Colors.redAccent,
+          color: Theme.of(context).colorScheme.primary,
         ),
         onChanged: onChanged,
         items: ActivityLevel.values
@@ -62,7 +62,7 @@ class MyDropDownButtonGoal extends StatelessWidget {
         elevation: 3,
         underline: Container(
           height: 3,
-          color: Colors.redAccent,
+          color: Theme.of(context).colorScheme.primary,
         ),
         onChanged: onChanged,
         items: Goal.values.map<DropdownMenuItem<Goal>>((Goal value) {

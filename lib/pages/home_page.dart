@@ -31,17 +31,9 @@ class _HomePageState extends State<HomePage> {
     var dataController = Provider.of<DataController>(context);
 
     return Scaffold(
-      backgroundColor:
-          isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
       appBar: AppBar(
-        backgroundColor:
-            isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
-        elevation: 0,
         title: Text(
           "Macro Calculator",
-          style: isThemeDark(context)
-              ? AppBarTitleStyle.dark
-              : AppBarTitleStyle.light,
         ),
         actions: [
           IconButton(
@@ -67,24 +59,16 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Expanded(
                       child: MyButton(
-                        title: 'Male',
-                        color: dataController.gender == Gender.male
-                            ? MyColors.accentColor
-                            : isThemeDark(context)
-                                ? MyColors.darkGrey
-                                : MyColors.white,
+                        title: 'MALE',
+                        selected: dataController.gender == Gender.male,
                         onTap: () => dataController.setGender(Gender.male),
                       ),
                     ),
                     spacer(width: 12),
                     Expanded(
                       child: MyButton(
-                        title: 'Female',
-                        color: dataController.gender == Gender.female
-                            ? MyColors.accentColor
-                            : isThemeDark(context)
-                                ? MyColors.darkGrey
-                                : MyColors.white,
+                        title: 'FEMALE',
+                        selected: dataController.gender == Gender.female,
                         onTap: () => dataController.setGender(Gender.female),
                       ),
                     ),
@@ -99,23 +83,17 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     Text(
                       "Height",
-                      style: isThemeDark(context)
-                          ? TitleStyle.dark
-                          : TitleStyle.light,
+                      style: MyTextStyles(context).cardTitle,
                     ),
                     Row(
                       children: [
                         Text(
                           "${dataController.height.toStringAsFixed(0)}",
-                          style: isThemeDark(context)
-                              ? ValueStyle.dark
-                              : ValueStyle.light,
+                          style: MyTextStyles(context).homeCardValue,
                         ),
                         Text(
-                          " cm",
-                          style: isThemeDark(context)
-                              ? ValueStyleUnit.dark
-                              : ValueStyleUnit.light,
+                          "cm",
+                          style: MyTextStyles(context).homeCardText,
                         ),
                       ],
                     ),
@@ -134,23 +112,17 @@ class _HomePageState extends State<HomePage> {
                   children: <Widget>[
                     Text(
                       "Weight",
-                      style: isThemeDark(context)
-                          ? TitleStyle.dark
-                          : TitleStyle.light,
+                      style: MyTextStyles(context).cardTitle,
                     ),
                     Row(
                       children: [
                         Text(
                           "${dataController.weight.toStringAsFixed(0)}",
-                          style: isThemeDark(context)
-                              ? ValueStyle.dark
-                              : ValueStyle.light,
+                          style: MyTextStyles(context).homeCardValue,
                         ),
                         Text(
-                          " kg",
-                          style: isThemeDark(context)
-                              ? ValueStyleUnit.dark
-                              : ValueStyleUnit.light,
+                          "kg",
+                          style: MyTextStyles(context).homeCardText,
                         ),
                       ],
                     ),
@@ -165,19 +137,20 @@ class _HomePageState extends State<HomePage> {
                 // age number picker
                 Text(
                   "Age",
-                  style:
-                      isThemeDark(context) ? TitleStyle.dark : TitleStyle.light,
+                  style: MyTextStyles(context).cardTitle,
                 ),
                 Center(
                   child: NumberPicker(
                     minValue: 12,
                     maxValue: 80,
                     itemCount: 7,
-                    itemWidth: 50,
-                    textStyle: isThemeDark(context)
-                        ? SubtitleStyle.dark
-                        : SubtitleStyle.light,
-                    selectedTextStyle: ResultValueStyle.lightDark,
+                    itemWidth: 47.2,
+                    selectedTextStyle: TextStyle(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textStyle: TextStyle(color: colorScheme(context).tertiary),
                     value: dataController.age,
                     axis: Axis.horizontal,
                     onChanged: (value) => dataController.setAge(value),
@@ -194,8 +167,7 @@ class _HomePageState extends State<HomePage> {
               children: [
                 Text(
                   "Activity level",
-                  style:
-                      isThemeDark(context) ? TitleStyle.dark : TitleStyle.light,
+                  style: MyTextStyles(context).cardTitle,
                 ),
                 MyDropDownButtonActivityLevel(
                   value: dataController.activityLevel,
@@ -204,8 +176,7 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(height: 8),
                 Text(
                   "Goal",
-                  style:
-                      isThemeDark(context) ? TitleStyle.dark : TitleStyle.light,
+                  style: MyTextStyles(context).cardTitle,
                 ),
                 MyDropDownButtonGoal(
                   value: dataController.goal,

@@ -20,22 +20,9 @@ class ResultTile extends StatelessWidget {
     return Tile(
       child: Column(
         children: [
-          Text(
-            value,
-            style: ResultValueStyle.lightDark,
-          ),
-          Text(
-            units,
-            style: isThemeDark(context)
-                ? ResultUnitStyle.dark
-                : ResultUnitStyle.light,
-          ),
-          Text(
-            title,
-            style: isThemeDark(context)
-                ? ResultTitleStyle.dark
-                : ResultTitleStyle.light,
-          ),
+          Text(value, style: MyTextStyles(context).resultCardValue),
+          Text(units, style: MyTextStyles(context).resultCardUnit),
+          Text(title, style: MyTextStyles(context).resultCardText),
         ],
       ),
     );

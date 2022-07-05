@@ -12,6 +12,10 @@ bool isThemeDark(BuildContext context) {
   return Theme.of(context).brightness == Brightness.dark ? true : false;
 }
 
+ColorScheme colorScheme(BuildContext context) {
+  return Theme.of(context).colorScheme;
+}
+
 extension stringExtension on String {
   String firstCapital() {
     return "${this[0].toUpperCase()}${this.substring(1)}";

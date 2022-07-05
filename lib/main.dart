@@ -3,6 +3,7 @@ import 'package:macro_calculator/controllers/data_controller.dart';
 import 'package:macro_calculator/controllers/theme_controller.dart';
 import 'package:macro_calculator/pages/home_page.dart';
 import 'package:flutter/material.dart';
+import 'package:macro_calculator/utils/color_schemes.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -27,10 +28,14 @@ class MyApp extends StatelessWidget {
             title: 'Macro Calculator',
             home: HomePage(),
             theme: ThemeData(
-              primaryColor: Colors.red,
-              accentColor: Colors.redAccent,
-              brightness: theme.brightness,
+              useMaterial3: true,
+              colorScheme: lightColorScheme,
             ),
+            darkTheme: ThemeData(
+              useMaterial3: true,
+              colorScheme: darkColorScheme,
+            ),
+            themeMode: ThemeMode.light,
           );
         },
       ),

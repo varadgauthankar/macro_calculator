@@ -32,18 +32,8 @@ class ResultPage extends StatelessWidget {
   Widget build(BuildContext context) {
     ScreenshotController screenshotController = ScreenshotController();
     return Scaffold(
-      backgroundColor:
-          isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
       appBar: AppBar(
-        backgroundColor:
-            isThemeDark(context) ? MyColors.darkGrey : MyColors.white,
-        elevation: 0,
-        title: Text(
-          "Results",
-          style: isThemeDark(context)
-              ? AppBarTitleStyle.dark
-              : AppBarTitleStyle.light,
-        ),
+        title: Text("Results"),
         leading: IconButton(
           icon: Icon(EvaIcons.arrowIosBack),
           color: isThemeDark(context) ? MyColors.white : MyColors.black,

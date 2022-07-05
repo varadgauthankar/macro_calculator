@@ -11,10 +11,8 @@ class Tile extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(6.0),
       child: Material(
-        borderRadius: BorderRadius.circular(8.0),
-        color: isThemeDark(context)
-            ? getOverLayColor(context, MyColors.darkGrey)
-            : Colors.white,
+        borderRadius: BorderRadius.circular(12.0),
+        color: Theme.of(context).colorScheme.surfaceVariant,
         elevation: 3,
         child: Padding(
           padding: const EdgeInsets.all(12.0),
