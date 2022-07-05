@@ -7,7 +7,7 @@ class ThemeController extends ChangeNotifier {
   Box box = Hive.box('theme');
 
   ThemeController() {
-    _themeMode = ThemeMode.values[box.get('themeMode') ?? 0];
+    _themeMode = ThemeMode.values[box.get('themeMode') ?? 1];
   }
 
   void toggleTheme() {
