@@ -8,7 +8,7 @@ import 'package:macro_calculator/utils/helpers.dart';
 import 'package:macro_calculator/utils/textStyles.dart';
 import 'package:macro_calculator/data/calculator.dart';
 import 'package:macro_calculator/widgets/my_button.dart';
-import 'package:macro_calculator/widgets/my_drop_down_button.dart';
+import 'package:macro_calculator/widgets/my_drop_down_menu.dart';
 import 'package:macro_calculator/widgets/slider.dart';
 import 'package:macro_calculator/widgets/tile.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -31,14 +31,12 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Macro Calculator",
-        ),
+        title: Text("Macro Calculator"),
         actions: [
           IconButton(
             tooltip: isThemeDark(context) ? 'Light Mode' : 'Dark Mode',
             icon: Icon(
-              isThemeDark(context) ? EvaIcons.sun : EvaIcons.moon,
+              isThemeDark(context) ? EvaIcons.sunOutline : EvaIcons.moonOutline,
             ),
             onPressed: () =>
                 Provider.of<ThemeController>(context, listen: false)
@@ -167,7 +165,7 @@ class _HomePageState extends State<HomePage> {
                   "Activity level",
                   style: MyTextStyles(context).cardTitle,
                 ),
-                MyDropDown<ActivityLevel>(
+                MyDropDownMenu<ActivityLevel>(
                   items: ActivityLevel.values,
                   value: dataController.activityLevel!,
                   onChanged: (value) => dataController.setActivityLevel(value),
@@ -177,7 +175,7 @@ class _HomePageState extends State<HomePage> {
                   "Goal",
                   style: MyTextStyles(context).cardTitle,
                 ),
-                MyDropDown<Goal>(
+                MyDropDownMenu<Goal>(
                   items: Goal.values,
                   value: dataController.goal!,
                   onChanged: (value) => dataController.setGoal(value),
@@ -188,9 +186,11 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
         tooltip: 'Calculate',
-        child: Icon(EvaIcons.checkmark),
+        heroTag: 'fab',
+        icon: Icon(Icons.done),
+        label: Text('Calculate'),
         onPressed: () {
           Calculator calculator = Calculator(
             gender: dataController.gender!,

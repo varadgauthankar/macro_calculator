@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:macro_calculator/utils/enums.dart';
 import 'package:macro_calculator/utils/helpers.dart';
 
-class MyDropDown<T> extends StatelessWidget {
+class MyDropDownMenu<T> extends StatelessWidget {
   final T value;
   final List<T> items;
   final Function(T?) onChanged;
-  const MyDropDown({
+  const MyDropDownMenu({
     Key? key,
     required this.value,
     required this.items,
@@ -24,7 +24,7 @@ class MyDropDown<T> extends StatelessWidget {
       padding: const EdgeInsets.only(left: 12.0),
       child: DropdownButton<T>(
         value: value,
-        icon: Icon(EvaIcons.arrowDown),
+        icon: Icon(EvaIcons.chevronDown),
         elevation: 3,
         underline: Container(
           height: 3,

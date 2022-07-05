@@ -32,7 +32,7 @@ class ResultPage extends StatelessWidget {
       appBar: AppBar(
         title: Text("Results"),
         leading: IconButton(
-          icon: Icon(EvaIcons.arrowIosBack),
+          icon: Icon(EvaIcons.chevronLeft),
           onPressed: () => Navigator.pop(context),
         ),
       ),
@@ -99,8 +99,9 @@ class ResultPage extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
+        heroTag: 'fab',
         tooltip: 'share',
-        child: Icon(Icons.share_outlined),
+        child: Icon(Icons.share_rounded),
         onPressed: () => shareScreenshot(screenshotController),
       ),
     );

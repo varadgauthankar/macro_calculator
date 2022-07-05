@@ -35,6 +35,7 @@ class MyTextStyles {
 
   TextStyle get resultCardUnit => TextStyle(
         fontSize: 12,
+        fontWeight: FontWeight.w500,
         color: Theme.of(context).colorScheme.secondary,
       );
 }
