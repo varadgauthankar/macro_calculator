@@ -28,10 +28,12 @@ class MyApp extends StatelessWidget {
             title: 'Macro Calculator',
             home: HomePage(),
             theme: ThemeData(
+              scaffoldBackgroundColor: lightColorScheme.background,
               useMaterial3: true,
               colorScheme: lightColorScheme,
             ),
             darkTheme: ThemeData(
+              scaffoldBackgroundColor: darkColorScheme.background,
               useMaterial3: true,
               colorScheme: darkColorScheme,
             ),
