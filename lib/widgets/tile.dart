@@ -4,7 +4,7 @@ import 'package:macro_calculator/utils/helpers.dart';
 
 class Tile extends StatelessWidget {
   final Widget child;
-  const Tile({Key key, this.child}) : super(key: key);
+  const Tile({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

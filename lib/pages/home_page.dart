@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Text(
-                          "${dataController.height.toStringAsFixed(0)}",
+                          "${dataController.height!.toStringAsFixed(0)}",
                           style: MyTextStyles(context).homeCardValue,
                         ),
                         Text(
@@ -100,9 +100,9 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 MyCustomSlider(
-                  value: dataController.height,
-                  min: 100,
-                  max: 220,
+                  value: dataController.height!,
+                  minValue: 100,
+                  maxValue: 220,
                   onChanged: (value) => dataController.setHeight(value),
                 ),
 
@@ -117,7 +117,7 @@ class _HomePageState extends State<HomePage> {
                     Row(
                       children: [
                         Text(
-                          "${dataController.weight.toStringAsFixed(0)}",
+                          "${dataController.weight!.toStringAsFixed(0)}",
                           style: MyTextStyles(context).homeCardValue,
                         ),
                         Text(
@@ -129,9 +129,9 @@ class _HomePageState extends State<HomePage> {
                   ],
                 ),
                 MyCustomSlider(
-                  value: dataController.weight,
-                  min: 40,
-                  max: 150,
+                  value: dataController.weight!,
+                  minValue: 40,
+                  maxValue: 150,
                   onChanged: (value) => dataController.setWeight(value),
                 ),
                 // age number picker
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                       fontWeight: FontWeight.bold,
                     ),
                     textStyle: TextStyle(color: colorScheme(context).tertiary),
-                    value: dataController.age,
+                    value: dataController.age!,
                     axis: Axis.horizontal,
                     onChanged: (value) => dataController.setAge(value),
                   ),
@@ -171,7 +171,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 MyDropDown<ActivityLevel>(
                   items: ActivityLevel.values,
-                  value: dataController.activityLevel,
+                  value: dataController.activityLevel!,
                   onChanged: (value) => dataController.setActivityLevel(value),
                 ),
                 SizedBox(height: 8),
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 MyDropDown<Goal>(
                   items: Goal.values,
-                  value: dataController.goal,
+                  value: dataController.goal!,
                   onChanged: (value) => dataController.setGoal(value),
                 ),
               ],
@@ -196,12 +196,12 @@ class _HomePageState extends State<HomePage> {
         foregroundColor: MyColors.black,
         onPressed: () {
           Calculator calculator = Calculator(
-            gender: dataController.gender,
-            height: dataController.height,
-            weight: dataController.weight,
-            age: dataController.age,
-            activityLevel: dataController.activityLevel,
-            goal: dataController.goal,
+            gender: dataController.gender!,
+            height: dataController.height!,
+            weight: dataController.weight!,
+            age: dataController.age!,
+            activityLevel: dataController.activityLevel!,
+            goal: dataController.goal!,
           );
 
           Navigator.push(

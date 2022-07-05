@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 
 class MyCustomSlider extends StatelessWidget {
-  final double min;
-  final double max;
+  final double minValue;
+  final double maxValue;
   final double value;
-  final Function onChanged;
-  const MyCustomSlider(
-      {Key key, this.min, this.max, this.value, this.onChanged})
-      : super(key: key);
+  final Function(double) onChanged;
+  const MyCustomSlider({
+    Key? key,
+    required this.minValue,
+    required this.maxValue,
+    required this.value,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +26,8 @@ class MyCustomSlider extends StatelessWidget {
         // overlayColor: Colors.red.withAlpha(32),
       ),
       child: Slider(
-        min: min,
-        max: max,
+        min: minValue,
+        max: maxValue,
         value: value,
         onChanged: onChanged,
       ),
@@ -33,13 +37,13 @@ class MyCustomSlider extends StatelessWidget {
 
 class CustomTrackShape extends RoundedRectSliderTrackShape {
   Rect getPreferredRect({
-    @required RenderBox parentBox,
+    required RenderBox parentBox,
     Offset offset = Offset.zero,
-    @required SliderThemeData sliderTheme,
+    required SliderThemeData sliderTheme,
     bool isEnabled = false,
     bool isDiscrete = false,
   }) {
-    final double trackHeight = sliderTheme.trackHeight;
+    final double trackHeight = sliderTheme.trackHeight!;
     final double trackLeft = offset.dx;
     final double trackTop =
         offset.dy + (parentBox.size.height - trackHeight) / 2;

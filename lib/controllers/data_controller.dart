@@ -3,13 +3,13 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:macro_calculator/utils/enums.dart';
 
 class DataController extends ChangeNotifier {
-  Gender gender;
-  double height;
-  double weight;
-  int age;
+  Gender? gender;
+  double? height;
+  double? weight;
+  int? age;
 
-  ActivityLevel activityLevel;
-  Goal goal;
+  ActivityLevel? activityLevel;
+  Goal? goal;
 
   Box box = Hive.box('data');
 
@@ -22,39 +22,39 @@ class DataController extends ChangeNotifier {
     this.goal = Goal.values[box.get('goal') ?? 0];
   }
 
-  void setGender(Gender gender) async {
+  void setGender(Gender? gender) async {
     this.gender = gender;
-    box.put('gender', gender.index);
+    box.put('gender', gender?.index);
     notifyListeners();
   }
 
-  void setHeight(double height) {
+  void setHeight(double? height) {
     this.height = height;
     box.put('height', height);
     notifyListeners();
   }
 
-  void setWeight(double weight) {
+  void setWeight(double? weight) {
     this.weight = weight;
     box.put('weight', weight);
     notifyListeners();
   }
 
-  void setAge(int age) {
+  void setAge(int? age) {
     this.age = age;
     box.put('age', age);
     notifyListeners();
   }
 
-  void setActivityLevel(ActivityLevel activityLevel) {
+  void setActivityLevel(ActivityLevel? activityLevel) {
     this.activityLevel = activityLevel;
-    box.put('activityLevel', activityLevel.index);
+    box.put('activityLevel', activityLevel?.index);
     notifyListeners();
   }
 
-  void setGoal(Goal goal) {
+  void setGoal(Goal? goal) {
     this.goal = goal;
-    box.put('goal', goal.index);
+    box.put('goal', goal?.index);
 
     notifyListeners();
   }

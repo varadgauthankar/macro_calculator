@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:macro_calculator/utils/helpers.dart';
+
 import 'package:macro_calculator/utils/textStyles.dart';
 import 'package:macro_calculator/widgets/tile.dart';
 
 class ResultTile extends StatelessWidget {
   const ResultTile({
-    Key key,
-    @required this.title,
-    @required this.value,
-    this.units,
+    Key? key,
+    required this.title,
+    required this.value,
+    required this.units,
   }) : super(key: key);
 
   final String title;

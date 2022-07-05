@@ -2,11 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:macro_calculator/utils/helpers.dart';
 
 class MyButton extends StatelessWidget {
-  final Function onTap;
+  final Function() onTap;
   final String title;
   final bool selected;
-  const MyButton({Key key, this.onTap, this.title, this.selected = false})
-      : super(key: key);
+  const MyButton({
+    Key? key,
+    required this.onTap,
+    required this.title,
+    this.selected = false,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class MyButton extends StatelessWidget {
               padding: const EdgeInsets.all(12.0),
               child: Text(
                 title,
-                style: Theme.of(context).textTheme.labelLarge.copyWith(
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
                       color: selected
                           ? colorScheme(context).onPrimary
                           : colorScheme(context).onSecondary,

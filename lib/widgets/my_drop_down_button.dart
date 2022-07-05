@@ -6,9 +6,13 @@ import 'package:macro_calculator/utils/helpers.dart';
 class MyDropDown<T> extends StatelessWidget {
   final T value;
   final List<T> items;
-  final Function(T) onChanged;
-  const MyDropDown({Key key, this.value, this.items, this.onChanged})
-      : super(key: key);
+  final Function(T?) onChanged;
+  const MyDropDown({
+    Key? key,
+    required this.value,
+    required this.items,
+    required this.onChanged,
+  }) : super(key: key);
 
   String _getText(T value) {
     return value.toString().split('.').last.firstCapital();

@@ -11,13 +11,13 @@ import 'package:share_plus/share_plus.dart';
 
 class ResultPage extends StatelessWidget {
   ResultPage({
-    this.totalCalories,
-    this.carbs,
-    this.protein,
-    this.fats,
-    this.bmi,
-    this.tdee,
-    this.bmiScale,
+    required this.totalCalories,
+    required this.carbs,
+    required this.protein,
+    required this.fats,
+    required this.bmi,
+    required this.tdee,
+    required this.bmiScale,
   });
 
   final double totalCalories;
@@ -115,7 +115,7 @@ class ResultPage extends StatelessWidget {
     var unit8List = await key.capture();
     String tempPath = (await getTemporaryDirectory()).path;
     File file = File('$tempPath/img.png');
-    await file.writeAsBytes(unit8List);
+    await file.writeAsBytes(unit8List!);
     await Share.shareFiles(
       [file.path],
       text: 'Calculated from Macro Calculator.\n' +

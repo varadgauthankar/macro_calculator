@@ -11,12 +11,12 @@ class Calculator {
   final Gender gender;
 
   Calculator({
-    this.activityLevel,
-    this.goal,
-    this.gender,
-    this.weight,
-    this.height,
-    this.age,
+    required this.activityLevel,
+    required this.goal,
+    required this.gender,
+    required this.weight,
+    required this.height,
+    required this.age,
   });
 
   double bmi() {
@@ -58,7 +58,7 @@ class Calculator {
     else if (activityLevel == ActivityLevel.extremly)
       return bmr() * 1.9;
     else
-      return null;
+      return 0;
   }
 
   double totalCalories() {
@@ -69,7 +69,7 @@ class Calculator {
     } else if (goal == Goal.gain) {
       return tdee() + 400;
     } else
-      return null;
+      return 0;
   }
 
   //protein
