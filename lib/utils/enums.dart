@@ -8,7 +8,7 @@ enum ActivityLevel {
   lightly,
   moderately,
   very,
-  extremly,
+  extremely,
 }
 
 enum Goal {
