@@ -3,7 +3,6 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:macro_calculator/utils/enums.dart';
 import 'package:macro_calculator/utils/helpers.dart';
-import 'package:macro_calculator/utils/textStyles.dart';
 
 //! i have no idea how to dynamically pass enum :(
 //! so had to create two seperate classes :'(
@@ -34,9 +33,9 @@ class MyDropDownButtonActivityLevel extends StatelessWidget {
             value: value,
             child: Text(
               value.toString().split('.').last.firstCapital() + ' Active',
-              style: isThemeDark(context)
-                  ? SubtitleStyle.dark
-                  : SubtitleStyle.light,
+              // style: isThemeDark(context)
+              //     ? SubtitleStyle.dark
+              //     : SubtitleStyle.light,
             ),
           );
         }).toList(),
@@ -70,9 +69,9 @@ class MyDropDownButtonGoal extends StatelessWidget {
             value: value,
             child: Text(
               value.toString().split('.').last.firstCapital() + ' Weight',
-              style: isThemeDark(context)
-                  ? SubtitleStyle.dark
-                  : SubtitleStyle.light,
+              // style: isThemeDark(context)
+              //     ? SubtitleStyle.dark
+              //     : SubtitleStyle.light,
             ),
           );
         }).toList(),
